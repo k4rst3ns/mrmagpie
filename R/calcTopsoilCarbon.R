@@ -3,8 +3,6 @@
 #'
 #' @param lpjml       Defines LPJmL version for crop/grass and natveg specific inputs
 #' @param climatetype Switch between different GCM climate scenarios
-#' @param cells       "magpiecell" for 59199 cells or "lpjcell" for 67420 cells
-
 #'
 #' @return magpie object in cellular resolution
 #' @author Kristine Karstens
@@ -17,8 +15,7 @@
 #' @importFrom magpiesets findset
 #' @importFrom mstools toolCoord2Isocell
 
-calcTopsoilCarbon <- function(cells = "lpjcell",
-                              lpjml = c(natveg = "LPJmL4_for_MAgPIE_44ac93de", crop = "ggcmi_phase3_nchecks_9ca735cb"),
+calcTopsoilCarbon <- function(lpjml = c(natveg = "LPJmL4_for_MAgPIE_44ac93de", crop = "ggcmi_phase3_nchecks_9ca735cb"),
                               climatetype = "GSWP3-W5E5:historical") {
 
   if (climatetype == "GSWP3-W5E5:historical") {
@@ -37,11 +34,7 @@ calcTopsoilCarbon <- function(cells = "lpjcell",
     stop("produced NA Carbon")
   }
 
-  if (cells == "magpiecell") {
-    topsoilc <- toolCoord2Isocell(topsoilc)
-  }
-
-  weight <- calcOutput("LandArea", cells = cells, aggregate = FALSE)
+  weight <- calcOutput("LandArea", aggregate = FALSE) + 10^-10
 
   return(list(x = topsoilc,
               weight = weight,
