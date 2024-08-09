@@ -443,12 +443,12 @@ fullCELLULARMAGPIE <- function(rev = numeric_version("0.1"), dev = "",
   if (grepl("newCropSOC", dev)) {
     calcOutput("Carbon", aggregate = FALSE, lpjml = lpjml, climatetype = climatetype,
                round = 6, years = "y1995", file = "lpj_carbon_stocks_0.5.mz")
-    calcOutput("TopsoilCarbon", aggregate = FALSE, lpjml = lpjml, climatetype = climatetype, cells = cells,
+    calcOutput("TopsoilCarbon", aggregate = FALSE, lpjml = lpjml, climatetype = climatetype,
                round = 6, years = "y1995", file = "lpj_carbon_topsoil_0.5.mz")
 
     calcOutput("Carbon", aggregate = "cluster", lpjml = lpjml, climatetype = climatetype,
                round = 6, years = lpjYears, file = paste0("lpj_carbon_stocks_", ctype, ".mz"))
-    calcOutput("TopsoilCarbon", aggregate = "cluster", lpjml = lpjml, climatetype = climatetype, cells = cells,
+    calcOutput("TopsoilCarbon", aggregate = "cluster", lpjml = lpjml, climatetype = climatetype,
                round = 6, years = lpjYears, file = paste0("lpj_carbon_topsoil_", ctype, ".mz"))
 
     if (grepl("totalPNV", dev)) {
@@ -464,14 +464,14 @@ fullCELLULARMAGPIE <- function(rev = numeric_version("0.1"), dev = "",
     }
 
   } else {
-    calcOutput("Carbon", aggregate = FALSE, lpjml = lpjml, climatetype = climatetype, cells = cells,
+    calcOutput("Carbon", aggregate = FALSE, lpjml = lpjml, climatetype = climatetype,
                round = 6, years = "y1995", file = "lpj_carbon_stocks_0.5.mz")
-    calcOutput("TopsoilCarbon", aggregate = FALSE, lpjml = lpjml, climatetype = climatetype, cells = cells,
+    calcOutput("TopsoilCarbon", aggregate = FALSE, lpjml = lpjml, climatetype = climatetype,
                round = 6, years = "y1995", file = "lpj_carbon_topsoil_0.5.mz")
 
-    calcOutput("Carbon", aggregate = "cluster", lpjml = lpjml, climatetype = climatetype,  cells = cells,
+    calcOutput("Carbon", aggregate = "cluster", lpjml = lpjml, climatetype = climatetype,
                round = 6, years = lpjYears, file = paste0("lpj_carbon_stocks_", ctype, ".mz"))
-    calcOutput("TopsoilCarbon", aggregate = "cluster", lpjml = lpjml, climatetype = climatetype, cells = cells,
+    calcOutput("TopsoilCarbon", aggregate = "cluster", lpjml = lpjml, climatetype = climatetype,
                round = 6, years = lpjYears, file = paste0("lpj_carbon_topsoil_", ctype, ".mz"))
   }
 
