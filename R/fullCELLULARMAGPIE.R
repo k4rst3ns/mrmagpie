@@ -340,14 +340,12 @@ fullCELLULARMAGPIE <- function(rev = numeric_version("0.1"), dev = "",
              file = paste0("forestageclasses_", ctype, ".mz"))
 
   calcOutput("PotentialForestArea",
-    refData = "lpj", cells = cells, lpjml = lpjml, climatetype = climatetype, years = lpjYears,
-    aggregate = FALSE, round = roundArea, file = "pot_forest_area_0.5.mz"
-  )
+             refData = "lpj", cells = cells, lpjml = lpjml, climatetype = climatetype, years = lpjYears,
+             aggregate = FALSE, round = roundArea, file = "pot_forest_area_0.5.mz")
 
   calcOutput("PotentialForestArea",
-    refData = "lpj", cells = cells, lpjml = lpjml, climatetype = climatetype, years = lpjYears,
-    aggregate = "cluster", round = roundArea, file = paste0("pot_forest_area_", ctype, ".mz")
-  )
+             refData = "lpj", cells = cells, lpjml = lpjml, climatetype = climatetype, years = lpjYears,
+             aggregate = "cluster", round = roundArea, file = paste0("pot_forest_area_", ctype, ".mz"))
 
   # 37 labour prod
   calcOutput("LabourProdImpactEmu", aggregate = "cluster", cells = cells, subtype = "impact",
@@ -442,15 +440,41 @@ fullCELLULARMAGPIE <- function(rev = numeric_version("0.1"), dev = "",
   calcOutput("NitrogenFixationRateNatural", cells = cells, aggregate = "cluster", round = 6,
              file = paste0("f50_NitrogenFixationRateNatural_", ctype, ".mz"))
 
-  calcOutput("Carbon", aggregate = FALSE, lpjml = lpjml, climatetype = climatetype, cells = cells,
-             round = 6, years = "y1995", file = "lpj_carbon_stocks_0.5.mz")
-  calcOutput("TopsoilCarbon", aggregate = FALSE, lpjml = lpjml, climatetype = climatetype, cells = cells,
-             round = 6, years = "y1995", file = "lpj_carbon_topsoil_0.5.mz")
+  if (grepl("newCropSOC", dev)) {
+    calcOutput("Carbon", aggregate = FALSE, lpjml = lpjml, climatetype = climatetype,
+               round = 6, years = "y1995", file = "lpj_carbon_stocks_0.5.mz")
+    calcOutput("TopsoilCarbon", aggregate = FALSE, lpjml = lpjml, climatetype = climatetype, cells = cells,
+               round = 6, years = "y1995", file = "lpj_carbon_topsoil_0.5.mz")
 
-  calcOutput("Carbon", aggregate = "cluster", lpjml = lpjml, climatetype = climatetype,  cells = cells,
-             round = 6, years = lpjYears, file = paste0("lpj_carbon_stocks_", ctype, ".mz"))
-  calcOutput("TopsoilCarbon", aggregate = "cluster", lpjml = lpjml, climatetype = climatetype, cells = cells,
-             round = 6, years = lpjYears, file = paste0("lpj_carbon_topsoil_", ctype, ".mz"))
+    calcOutput("Carbon", aggregate = "cluster", lpjml = lpjml, climatetype = climatetype,
+               round = 6, years = lpjYears, file = paste0("lpj_carbon_stocks_", ctype, ".mz"))
+    calcOutput("TopsoilCarbon", aggregate = "cluster", lpjml = lpjml, climatetype = climatetype, cells = cells,
+               round = 6, years = lpjYears, file = paste0("lpj_carbon_topsoil_", ctype, ".mz"))
+
+    if (grepl("totalPNV", dev)) {
+      calcOutput("SoilcarbonLayer", aggregate = FALSE, lpjml = lpjml, climatetype = climatetype, round = 6,
+                 weight = "totalPNV", years = "y1995", file = "lpj_carbon_soillayer_0.5.mz")
+      calcOutput("SoilcarbonLayer", aggregate = "cluster", lpjml = lpjml, climatetype = climatetype, round = 6,
+                 weight = "totalPNV", years = lpjYears, file = paste0("lpj_carbon_soillayer_", ctype, ".mz"))
+    } else if (grepl("PotForest", dev)) {
+      calcOutput("SoilcarbonLayer", aggregate = FALSE, lpjml = lpjml, climatetype = climatetype, round = 6,
+                 weight = "PotForest", years = "y1995", file = "lpj_carbon_soillayer_0.5.mz")
+      calcOutput("SoilcarbonLayer", aggregate = "cluster", lpjml = lpjml, climatetype = climatetype, round = 6,
+                 weight = "PotForest", years = lpjYears, file = paste0("lpj_carbon_soillayer_", ctype, ".mz"))
+    }
+
+  } else {
+    calcOutput("Carbon", aggregate = FALSE, lpjml = lpjml, climatetype = climatetype, cells = cells,
+               round = 6, years = "y1995", file = "lpj_carbon_stocks_0.5.mz")
+    calcOutput("TopsoilCarbon", aggregate = FALSE, lpjml = lpjml, climatetype = climatetype, cells = cells,
+               round = 6, years = "y1995", file = "lpj_carbon_topsoil_0.5.mz")
+
+    calcOutput("Carbon", aggregate = "cluster", lpjml = lpjml, climatetype = climatetype,  cells = cells,
+               round = 6, years = lpjYears, file = paste0("lpj_carbon_stocks_", ctype, ".mz"))
+    calcOutput("TopsoilCarbon", aggregate = "cluster", lpjml = lpjml, climatetype = climatetype, cells = cells,
+               round = 6, years = lpjYears, file = paste0("lpj_carbon_topsoil_", ctype, ".mz"))
+  }
+
 
   # 58 peatland
   calcOutput("Peatland", subtype = "degraded", cells = cells, aggregate = FALSE,
